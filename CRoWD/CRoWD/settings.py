@@ -25,19 +25,20 @@ SECRET_KEY = 'django-insecure-9t^f(o!gnl)&t%)dffg%7o$1g2kd_&agom=a$zwymtt*s%na7c
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
-ALLOWED_HOSTS = ['Xevorius.pythonanywhere.com', '127.0.0.1']
+ALLOWED_HOSTS = ['CRoWD.pythonanywhere.com', '127.0.0.1']
 
 
 # Application definition
 
 INSTALLED_APPS = [
+    'rest_framework',
     'django.contrib.admin',
     'django.contrib.auth',
     'django.contrib.contenttypes',
     'django.contrib.sessions',
     'django.contrib.messages',
     'django.contrib.staticfiles',
-    'home.apps.HomeConfig',
+    'chat.apps.ChatConfig',
 ]
 
 MIDDLEWARE = [
