@@ -1,5 +1,5 @@
 from django.contrib.auth.models import User
-from rest_framework import viewsets
+from rest_framework import viewsets, status
 from rest_framework.response import Response
 
 from .models import Chat, Message
@@ -72,6 +72,16 @@ class MessageViewSet(viewsets.ModelViewSet):
         queryset = Message.objects.filter(chat__pk=chat_pk)
         serializer = MessageSerializer(queryset, many=True)
         return Response(serializer.data)
+
+    def create(self, request, chat_pk=None):
+        chat = Chat.objects.get(pk=chat_pk)
+        serializer = MessageSerializer(data=request.data)
+        if serializer.is_valid():
+            message = serializer.save()  # Save the message to get a message instance
+            chat.messages.add(message)  # Add the message to the chat
+            chat.save()  # Save the chat
+            return Response(serializer.data, status=status.HTTP_201_CREATED)
+        return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
 
 
 class UserViewSet(viewsets.ModelViewSet):

@@ -8,6 +8,6 @@ urlpatterns = [
     path('messages/<int:pk>/', MessageViewSet.as_view({'get': 'retrieve', 'put': 'update', 'patch': 'partial_update', 'delete': 'destroy'}), name='message_detail'),
     path('users/', UserViewSet.as_view({'get': 'list', 'post': 'create'}), name='users'),
     path('users/<int:pk>/', UserViewSet.as_view({'get': 'retrieve', 'put': 'update', 'patch': 'partial_update', 'delete': 'destroy'}),name='user_detail'),
-    path('chats/<int:chat_pk>/messages/', MessageViewSet.as_view({'get': 'list'}), name='chat_messages'),
+    path('chats/<int:chat_pk>/messages/', MessageViewSet.as_view({'get': 'list', 'post': 'create'}), name='chat_messages'),
 ]
 
