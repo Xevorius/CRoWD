@@ -8,6 +8,9 @@ class Message(models.Model):
     updated = models.DateTimeField(auto_now=True)
     text = models.TextField()
 
+    def __str__(self):
+        return f"{self.text}"
+
     class Meta:
         ordering = ['created']
 

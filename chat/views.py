@@ -35,6 +35,9 @@ class ChatViewSet(viewsets.ModelViewSet):
         chat.delete()
         return Response(status=204)
 
+    def get_messages(self, request, pk=None):
+        chat = self.get_object()
+
 
 class MessageViewSet(viewsets.ModelViewSet):
     queryset = Message.objects.all()
@@ -64,6 +67,11 @@ class MessageViewSet(viewsets.ModelViewSet):
         message = self.get_object()
         message.delete()
         return Response(status=204)
+
+    def list(self, request, chat_pk=None):
+        queryset = Message.objects.filter(chat__pk=chat_pk)
+        serializer = MessageSerializer(queryset, many=True)
+        return Response(serializer.data)
 
 
 class UserViewSet(viewsets.ModelViewSet):
