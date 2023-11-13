@@ -1,9 +1,12 @@
-from django.contrib.auth.models import User
+from django.conf import settings
 from rest_framework import viewsets, status
 from rest_framework.response import Response
 
 from .models import Chat, Message
 from .serializers import ChatSerializer, MessageSerializer, UserSerializer
+from django.contrib.auth import get_user_model
+
+User = get_user_model()
 
 
 class ChatViewSet(viewsets.ModelViewSet):
