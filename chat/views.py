@@ -2,7 +2,7 @@ import jwt
 from django.contrib.auth import get_user_model
 from rest_framework import viewsets, status
 from rest_framework.exceptions import AuthenticationFailed
-from rest_framework.permissions import IsAuthenticated
+
 from rest_framework.response import Response
 
 from .models import Chat, Message
@@ -23,7 +23,6 @@ def authCheck(request):
 
 
 class ChatViewSet(viewsets.ModelViewSet):
-    permission_classes = [IsAuthenticated]
     queryset = Chat.objects.all()
     serializer_class = ChatSerializer
 
