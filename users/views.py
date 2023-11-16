@@ -1,4 +1,8 @@
+from io import BytesIO
+
+import qrcode
 from django.contrib.auth.models import User
+from django.http import HttpResponse
 from rest_framework.decorators import api_view, permission_classes
 from rest_framework.permissions import IsAuthenticated
 from rest_framework.views import APIView
@@ -74,3 +78,28 @@ class LogoutView(APIView):
             'message': 'success'
         }
         return response
+
+
+class UserQrView(APIView):
+    def get(self, request):
+        token = request.COOKIES.get('jwt')
+
+        if not token:
+            raise AuthenticationFailed('Unauthenticated!')
+
+        try:
+            payload = jwt.decode(token, 'secret', algorithms=['HS256'])
+        except jwt.ExpiredSignatureError:
+            raise AuthenticationFailed('Unauthenticated!')
+
+        qr = qrcode.QRCode(version=1, error_correction=qrcode.constants.ERROR_CORRECT_L, box_size=20, border=2)
+        user = User.objects.filter(id=payload['id']).first()
+        serializer = UserSerializer(user)
+        qr.add_data(serializer.data)
+        qr.make(fit=True)
+        img = qr.make_image(fill_color="black", back_color="White")
+        print(type(img))
+        byte_io = BytesIO()
+        img.save(byte_io, 'png')
+        byte_io.seek(0)
+        return HttpResponse(byte_io, content_type="image/png")
