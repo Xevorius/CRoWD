@@ -12,6 +12,7 @@ User = get_user_model()
 
 
 def authCheck(request):
+    print(request.data)
     token = request.COOKIES.get('jwt')
     if not token:
         raise AuthenticationFailed('Unauthenticated!')
