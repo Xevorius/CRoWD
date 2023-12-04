@@ -98,7 +98,6 @@ class UserQrView(APIView):
         qr.add_data(serializer.data)
         qr.make(fit=True)
         img = qr.make_image(fill_color="black", back_color="White")
-        print(type(img))
         byte_io = BytesIO()
         img.save(byte_io, 'png')
         byte_io.seek(0)

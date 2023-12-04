@@ -69,7 +69,7 @@ class MessageViewSet(viewsets.ModelViewSet):
 
     def create(self, request):
         user = authCheck(request)
-        serializer = self.serializer_class(data=request.data)
+        serializer = self.serializer_class(data=request.data, user=user)
         if serializer.is_valid():
             serializer.save()
             return Response(serializer.data, status=201)

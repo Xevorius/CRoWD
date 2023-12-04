@@ -44,6 +44,8 @@ INSTALLED_APPS = [
     'django.contrib.staticfiles',
     'chat.apps.ChatConfig',
     'users.apps.UsersConfig',
+    'delivery.apps.DeliveryConfig',
+    'powershare.apps.PowershareConfig',
     'corsheaders',
 
 ]
