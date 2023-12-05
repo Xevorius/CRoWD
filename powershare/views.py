@@ -37,7 +37,7 @@ class PowerShareOrderViewSet(viewsets.ModelViewSet):
     def list(self, request):
         try:
             user = authCheck(request)
-            queryset = PowerShareOrder.objects.filter(users=user['id'])
+            queryset = PowerShareOrder.objects.all()
             serializer = PowerShareOrderSerializer(queryset, many=True)
         except AuthenticationFailed:
             return Response("User authentication failed", status=400)
