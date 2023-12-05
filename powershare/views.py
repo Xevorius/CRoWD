@@ -13,8 +13,8 @@ class PowerShareStationViewSet(viewsets.ModelViewSet):
 
     def list(self, request):
         try:
-            user = authCheck(request)
-            queryset = PowerShareStation.objects.filter(users=user['id'])
+            authCheck(request)
+            queryset = PowerShareStation.objects.all()
             serializer = PowerShareStationSerializer(queryset, many=True)
         except AuthenticationFailed:
             return Response("User authentication failed", status=400)
@@ -37,7 +37,7 @@ class PowerShareOrderViewSet(viewsets.ModelViewSet):
     def list(self, request):
         try:
             user = authCheck(request)
-            queryset = PowerShareOrder.objects.all()
+            queryset = PowerShareOrder.objects.filter(users=user['id'])
             serializer = PowerShareOrderSerializer(queryset, many=True)
         except AuthenticationFailed:
             return Response("User authentication failed", status=400)
