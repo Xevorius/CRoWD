@@ -35,7 +35,6 @@ CSRF_TRUSTED_ORIGINS = ['https://crowd.pythonanywhere.com', 'http://127.0.0.1']
 
 INSTALLED_APPS = [
     'rest_framework',
-    # 'rest_framework.authtoken',
     'django.contrib.admin',
     'django.contrib.auth',
     'django.contrib.contenttypes',

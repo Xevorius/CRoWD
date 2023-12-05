@@ -5,8 +5,8 @@ User = get_user_model()
 
 
 class PowerShareStation(models.Model):
-    lat = models.CharField(max_length=100)
-    lon = models.CharField(max_length=100)
+    lat = models.FloatField(max_length=100)
+    lon = models.FloatField(max_length=100)
     model = models.CharField(max_length=100)
     created = models.DateTimeField(auto_now_add=True)
 

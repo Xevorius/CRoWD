@@ -1,3 +1,6 @@
 from django.contrib import admin
 
-# Register your models here.
+from powershare.models import PowerShareStation, PowerShareOrder
+
+admin.site.register(PowerShareStation)
+admin.site.register(PowerShareOrder)
