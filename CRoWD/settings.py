@@ -49,6 +49,7 @@ INSTALLED_APPS = [
     'payment.apps.PaymentConfig',
     'profiles.apps.ProfilesConfig',
     'crispy_forms',
+    'crispy_bootstrap4',
     'corsheaders',
 
 ]
@@ -197,5 +198,8 @@ CORS_ALLOW_ALL_ORIGINS = True
 CORS_ALLOW_CREDENTIALS = True
 
 CRISPY_TEMPLATE_PACK = 'bootstrap4'
+
+PAYSTACK_SECRET_KEY = 'sk_live_a705be1b224769977bf27413a1ff96acdad8c36e'
+PAYSTACK_PUBLIC_KEY = 'pk_live_58993dcb2c8e355f832740b600474cb73a114fcb'
 
 
