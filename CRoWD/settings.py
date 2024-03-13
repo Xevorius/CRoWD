@@ -45,6 +45,10 @@ INSTALLED_APPS = [
     'users.apps.UsersConfig',
     'delivery.apps.DeliveryConfig',
     'powershare.apps.PowershareConfig',
+    'wallet.apps.WalletConfig',
+    'payment.apps.PaymentConfig',
+    'profiles.apps.ProfilesConfig',
+    'crispy_forms',
     'corsheaders',
 
 ]
@@ -191,3 +195,8 @@ DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
 # AUTH_USER_MODEL = 'users.User'
 CORS_ALLOW_ALL_ORIGINS = True
 CORS_ALLOW_CREDENTIALS = True
+
+CRISPY_TEMPLATE_PACK = 'bootstrap4'
+
+PAYSTACK_SECRET_KEY = 'sk_live_1ee9156ed35a2acbfac792562a5879875cb1e581'
+PAYSTACK_PUBLIC_KEY = 'pk_live_58993dcb2c8e355f832740b600474cb73a114fcb'

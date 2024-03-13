@@ -4,6 +4,7 @@ from django.contrib.auth.models import User
 from import_export import resources
 from import_export.admin import ImportExportModelAdmin
 
+
 # from users.models import Profile
 
 
@@ -21,4 +22,3 @@ class UserResource(resources.ModelResource):
 
 admin.site.unregister(User)
 admin.site.register(User, UserAdmin)
-# admin.site.register(Profile)

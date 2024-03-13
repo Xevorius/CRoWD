@@ -8,7 +8,7 @@ from PIL import Image
 #     image = models.ImageField(default='default.jpg', upload_to='profile_pics')
 #
 #     def __str__(self):
-#         return f'{self.user.username} profile'
+#         return f"{self.user.username}'s profile"
 #
 #     def save(self, **kwargs):
 #         super().save()
@@ -24,4 +24,3 @@ from PIL import Image
 #             output_size = (300, 300)
 #             cropped_img.thumbnail(output_size)
 #             cropped_img.save(self.image.path)
-
