@@ -1,21 +1,21 @@
 from django.conf import settings
 from django.shortcuts import render
-from rest_framework import viewsets
+from rest_framework import viewsets, status
 from rest_framework.exceptions import AuthenticationFailed
 from rest_framework.response import Response
-from rest_framework.views import APIView
 
 from authenticators.user_authenticator import UserAuthenticator
-from payment import forms
-from .models import UserWallet, UserWalletTransaction
-from .serializers import UserWalletSerializer, UserWalletTransactionSerializer
+from payment.models import Payment
+from .models import UserWallet, UserWalletTransaction, User
+from .serializers import UserWalletSerializer, UserWalletTransactionSerializer, DepositSerializer
 
 
 class WalletViewSet(viewsets.ModelViewSet):
     queryset = UserWallet.objects.all()
-    serializer_class = UserWalletSerializer
+    serializer_class = DepositSerializer
 
-    def get(self, request) -> Response:
+    @staticmethod
+    def get(request) -> Response:
         """
         This function is linked to the auth/user path of this API. It will return the basic information about the
         authenticated user in a http request.
@@ -23,13 +23,30 @@ class WalletViewSet(viewsets.ModelViewSet):
         @param request: Http request containing the JWT token as a cookie.
         @return: Http response containing some basic information about the user.
         """
-        try:
-            user = UserAuthenticator(request)
-            queryset = UserWallet.objects.filter(user=user['id'])
-            serializer = UserWalletSerializer(queryset.first(), many=False)
-        except AuthenticationFailed:
-            return Response("User authentication failed", status=400)
+        user = UserAuthenticator(request)
+        queryset = UserWallet.objects.filter(user=user['id'])
+        serializer = UserWalletSerializer(queryset.first(), many=False)
         return Response(serializer.data)
+
+    @staticmethod
+    def post(request) -> Response:
+        """
+        This function is linked to the auth/login path of this API. It will take the inputted credentials and varify
+        them. If the credentials are correct, this function will return a JWT token that is valid for 1 day.
+
+        @param request: Http containing the credentials of a user
+        @return: Http response containing the JWT token as well as a cookie containing
+        the same token under variable 'jwt'
+        """
+        user = UserAuthenticator(request)
+        serializer = DepositSerializer(data=request.data)
+        if serializer.is_valid():
+            payment = Payment(user=User.objects.get(pk=user['id']), amount=serializer.data['amount'],
+                              email=serializer.data['email'])
+            payment.save()
+            return render(request, 'make_payment.html', {'payment': payment,
+                                                         'paystack_public_key': settings.PAYSTACK_PUBLIC_KEY})
+        return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
 
 
 class WalletTransactionsViewSet(viewsets.ModelViewSet):
@@ -72,16 +89,3 @@ class WalletTransactionsViewSet(viewsets.ModelViewSet):
         except AuthenticationFailed:
             return Response("User authentication failed", status=400)
         return Response(serializer.data)
-
-
-def DepositToWallet(request):
-    if request.method == "POST":
-        payment_form = forms.PaymentForm(request.POST)
-        if payment_form.is_valid():
-            payment = payment_form.save()
-            return render(request, 'make_payment.html', {'payment': payment,
-                                                         'paystack_public_key': settings.PAYSTACK_PUBLIC_KEY})
-    else:
-        payment_form = forms.PaymentForm()
-    return render(request, 'initiate_payment.html', {'payment_form': payment_form})
-

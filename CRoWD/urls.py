@@ -24,5 +24,5 @@ urlpatterns = [
     path('user/', include('users.urls')),
     path('delivery/', include('delivery.urls')),
     path('powershare/', include('powershare.urls')),
-    path('payment/', include('payment.urls')),
+    # path('payment/', include('payment.urls')),
 ]

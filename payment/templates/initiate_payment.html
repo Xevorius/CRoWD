@@ -5,17 +5,24 @@
 
 <div class="container">
     <div class="d-flex row justify-content-center align-items-center py-md-5 py-3" style="min-height: 90vh;">
-        <div class="col-12">
-            <form action="." method="POST">
-                <h4>Enter amount</h4>
-                <hr>
-                {% csrf_token %}
-                {{ payment_form | crispy }}
-                <br>
-                <p>
-                    <input class="btn btn-primary" type="submit" value="submit">
-                </p>
-            </form>
+        <div class="col-7">
+            <div class="card">
+              <div class="card-header d-flex justify-content-center">
+                Make payment
+              </div>
+              <div class="card-body">
+                <h5 class="card-title d-flex justify-content-center">Enter the amount you would like to deposit.</h5>
+                <form action="." method="POST">
+                    <hr>
+                    {% csrf_token %}
+                    {{ payment_form | crispy }}
+                    <br>
+                    <p class="d-flex justify-content-center">
+                        <input class="btn btn-outline-success" type="submit" value="Make payment">
+                    </p>
+                </form>
+              </div>
+            </div>
         </div>
     </div>
 </div>

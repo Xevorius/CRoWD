@@ -1,12 +1,11 @@
-from django.urls import path, include
+from django.urls import path
 
-from wallet.views import WalletViewSet, WalletTransactionsViewSet, DepositToWallet
+from payment.views import verify_payment
+from wallet.views import WalletViewSet, WalletTransactionsViewSet
 
 urlpatterns = [
-    path('', WalletViewSet.as_view({'get': 'get'}), name='user_wallet'),
     path('transactions/', WalletTransactionsViewSet.as_view({'get': 'list'}), name='user_wallet'),
-    path('transactions/<int:pk>/',
-         WalletTransactionsViewSet.as_view({'get': 'retrieve'})),
-    path('deposit/', include('payment.urls')),
-
+    path('transactions/<int:pk>/', WalletTransactionsViewSet.as_view({'get': 'retrieve'})),
+    path('', WalletViewSet.as_view({'get': 'get', 'post': 'post'}), name='user_wallet'),
+    path('<str:ref>/', verify_payment, name="verify-payment"),
 ]

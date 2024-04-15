@@ -8,10 +8,10 @@ User = get_user_model()
 
 class UserWallet(models.Model):
     user = models.OneToOneField(User, on_delete=models.CASCADE)
-    balance = models.FloatField(max_length=100, default=0)
+    balance = models.PositiveIntegerField(default=0)
 
     def __str__(self):
-        return f"{self.user.username}'s wallet"
+        return f"{self.user.email}'s wallet"
 
 
 class UserWalletTransaction(models.Model):

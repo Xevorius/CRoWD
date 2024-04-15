@@ -20,5 +20,5 @@ class UserResource(resources.ModelResource):
 #     pass
 
 
-admin.site.unregister(User)
+# admin.site.unregister(User)
 admin.site.register(User, UserAdmin)

@@ -12,4 +12,4 @@ class PowerShareStationSerializer(ModelSerializer):
 class PowerShareOrderSerializer(ModelSerializer):
     class Meta:
         model = PowerShareOrder
-        fields = ('pickupStation','returnTime')
+        fields = ('pickupStation','pickupTime')

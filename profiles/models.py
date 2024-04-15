@@ -1,9 +1,10 @@
 from PIL import Image
 from django.contrib.auth import get_user_model
-from django.contrib.auth.models import User
 from django.db import models
 from django.db.models.signals import post_save, pre_delete
 from django.dispatch import receiver
+
+User = get_user_model()
 
 
 class Profile(models.Model):
@@ -11,7 +12,7 @@ class Profile(models.Model):
     image = models.ImageField(default='default.jpg', upload_to='profile_pics')
 
     def __str__(self):
-        return f"{self.user.username}'s profile"
+        return f"{self.user.email}'s profile"
 
     def save(self, **kwargs):
         super().save()
